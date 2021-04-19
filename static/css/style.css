@@ -1,0 +1,24 @@
+@font-face {
+    font-family: Lexend-deca !important;
+    src: url("../font/LexendDeca-Regular.ttf");
+}
+
+* {
+    font-family: Lexend-deca !important;
+}
+
+body {
+    background-color: #000;
+    height: 100vh;
+    overflow-x: hidden;
+    color: #fff;
+}
+
+footer {
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    font-family: lexend-deca;
+    margin: 20px 0 0 0;
+    bottom: 0;
+}
