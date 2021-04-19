@@ -19,4 +19,8 @@ app.get('/play', (req, res) => {
     res.render('play');
 });
 
+app.post('/play', (req, res) => {
+    res.send('Posted')
+})
+
 app.listen(3000, console.log('Started'));

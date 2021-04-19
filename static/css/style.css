@@ -1,15 +1,12 @@
-@font-face {
-    font-family: Lexend-deca !important;
-    src: url("../font/LexendDeca-Regular.ttf");
-}
+/* Main layout */
 
 * {
-    font-family: Lexend-deca !important;
+    font-family: "Lexend Deca" !important;
 }
 
 body {
     background-color: #000;
-    height: 100vh;
+    /* height: 100vh; */
     overflow-x: hidden;
     color: #fff;
 }
@@ -18,7 +15,67 @@ footer {
     text-align: center;
     position: fixed;
     width: 100%;
-    font-family: lexend-deca;
     margin: 20px 0 0 0;
     bottom: 0;
 }
+
+/* /play */
+
+#heading {
+    margin-left: 20vw;
+    margin-top: 8vh;
+    font-size: 3.5vw;
+    font-weight: normal;
+}
+
+#user_welcome {
+    margin-left: 20vw;
+}
+
+.box {
+    width: 50vw;
+    height: auto;
+    border: 1px solid #fff;
+    padding: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.box h1{
+    text-align: center;
+    margin: auto;
+    font-weight: normal;
+}
+
+.box p {
+    font-size: 1.2vw;
+}
+
+input[type=text], select {
+    width: 100%;
+    background-color: #5a5a5a;
+    padding: 6px 12px;
+    color: #fff;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid rgb(102, 133, 184);
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=submit] {
+    width: auto;
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+::placeholder {
+    color: #8d8d8d
+}
+  
