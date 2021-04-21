@@ -53,6 +53,15 @@ footer {
     font-size: 1.2vw;
 }
 
+#timer {
+    float: right;
+    position: relative;
+    color: #16e16e;
+    font-size: 2vw;
+    margin-top: -9%;
+    margin-right: -2.5%;
+}
+
 input[type=text], select {
     width: 100%;
     background-color: #5a5a5a;
