@@ -23,6 +23,7 @@ const getLevel = (callback) => {
 }
 
 router.get('/', (req, res) => {
+    let winsw = false
     getLevel((level) => { 
         db.collection('questions').doc(`q${level}`).get()
         .then((doc) => {
@@ -63,6 +64,13 @@ router.post('/', (req, res) => {
     .catch((err) => {
         res.send(err.message);
     })
+})
+
+router.post('/switch', (req, res) => {
+    let reqj = req.body
+    if (reqj["winsw"]) {
+        winsw = true;
+    }
 })
 
 module.exports = router
