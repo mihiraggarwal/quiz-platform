@@ -93,9 +93,10 @@ router.post('/', (req, res) => {
         else {
             res.send('No data found')
         }
-        answersMap[`${docId.slice(1,)}`] = req.body.answer;
+        let currentAns = req.body.answer.split(' ').join('').toLowerCase()
+        answersMap[`${docId.slice(1,)}`] = currentAns;
         allTimes[`${docId.slice(1,)}`] = answerTime;
-        setPoints(winsw, answerTime, req.body.answer, (ansPoints) => {
+        setPoints(winsw, answerTime, currentAns, (ansPoints) => {
             points[`${docId.slice(1,)}`] = ansPoints
             totalPoints = parseInt(totalPoints)
             totalPoints += ansPoints
