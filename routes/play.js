@@ -13,15 +13,19 @@ let docId = '';
 let ans = '';
 let startTime = 0;
 let ansPoints = 0;
+let pseudoStart = 0
 let winsw = false;
+let relCheck = false
 
 const getLevel = (callback) => {
-    let level = ''
+    let level = 0
     db.collection('users').doc('Mihir Aggarwal').get()
     .then((doc) => {
         let data = doc.data()
         level = data.question
-        callback(level)
+        relChecker = data.reload
+        startPrev = data.start_time
+        callback(level, relChecker, startPrev)
     })
 }
 
@@ -44,14 +48,27 @@ const setPoints = (winsw, answerTime, currentAns, callback) => {
 
 router.get('/', (req, res) => {
     winsw = false
-    getLevel((level) => { 
+    getLevel((level, relChecker, startPrev) => { 
         db.collection('questions').doc(`q${level}`).get()
         .then((doc) => {
             if (doc.exists) {
                 docId = doc.id;
+                relCheck = relChecker;
+                pseudoStart = startPrev;
                 res.render('play', {data: {data: doc.data()}})
-                startTime = new Date().getTime() / 1000;
+                if (!relCheck){
+                    startTime = new Date().getTime() / 1000;
+                    db.collection('users').doc('Mihir Aggarwal').update({
+                        start_time: parseInt(startTime)
+                    });
+                } else {
+                    startTime = pseudoStart;
+                    winsw = true;
+                }
                 ans = doc.data().answer
+                db.collection('users').doc('Mihir Aggarwal').update({
+                    reload: true
+                });
             }
             else {
                 res.send('No data gotten')
@@ -87,8 +104,9 @@ router.post('/', (req, res) => {
                 answers: answersMap,
                 time: allTimes,
                 points: points,
-                total_points: totalPoints
-            }).then(res.redirect(req.get('referrer')))
+                total_points: totalPoints,
+                reload: false
+            }).then(res.redirect('back'))
         });
     })
     .catch((err) => {
