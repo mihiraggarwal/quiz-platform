@@ -17,6 +17,7 @@ let ansPoints = 0;
 let pseudoStart = 0
 let winsw = false;
 let relCheck = false
+let userEnd = false;
 
 const getLevel = (email, callback) => {
     let level = 0
@@ -54,38 +55,38 @@ router.get('/', (req, res) => {
         userEmail = userDetails.email;
         winsw = false
         getLevel(userEmail, (level, relChecker, startPrev) => { 
-            if (level>10){
-                res.send('yea fin')
-            }
-            else{
-                db.collection('questions').doc(`q${level}`).get()
-                .then((doc) => {
-                    if (doc.exists) {
-                        docId = doc.id;
-                        relCheck = relChecker;
-                        pseudoStart = startPrev;
-                        res.render('play', {data: {data: doc.data(), name: userDetails.name}})
-                        if (!relCheck){
-                            startTime = new Date().getTime() / 1000;
-                            db.collection('users').doc(userEmail).update({
-                                start_time: parseInt(startTime)
-                            });
-                        } else {
-                            startTime = pseudoStart;
-                            winsw = true;
-                        }
-                        ans = doc.data().answer
+            db.collection('questions').doc(`q${level}`).get()
+            .then((doc) => {
+                if (doc.exists) {
+                    docId = doc.id;
+                    relCheck = relChecker;
+                    pseudoStart = startPrev;
+                    res.render('play', {data: {data: doc.data(), name: userDetails.name, userStatus: userEnd}})
+                    if (!relCheck){
+                        startTime = new Date().getTime() / 1000;
                         db.collection('users').doc(userEmail).update({
-                            reload: true
+                            start_time: parseInt(startTime)
                         });
+                    } else {
+                        startTime = pseudoStart;
+                        winsw = true;
                     }
-                    else {
-                        res.send('No data gotten')
+                    ans = doc.data().answer
+                    db.collection('users').doc(userEmail).update({
+                        reload: true
+                    });
+                }
+                else {
+                    module.exports = {
+                        userFin: () => {
+                            return userEnd
+                        }
                     }
-                }).catch((err) => {
-                    res.send(err.message);
-                });
-            };
+                    res.redirect('./fin')
+                }
+            }).catch((err) => {
+                res.send(err.message);
+            });
         });
     } catch {
         console.log('No user found')
@@ -121,7 +122,7 @@ router.post('/', (req, res) => {
                 points: points,
                 total_points: totalPoints,
                 reload: false
-            }).then(res.redirect('back'))
+            }).then(res.redirect('./play'))
         });
     })
     .catch((err) => {
@@ -136,4 +137,6 @@ router.post('/switch', (req, res) => {
     }
 })
 
-module.exports = router
+module.exports = {
+    router: router
+}
