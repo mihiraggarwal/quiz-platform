@@ -6,17 +6,27 @@
 
 body {
     background-color: #000;
-    /* height: 100vh; */
+    min-height: 100vh;
     overflow-x: hidden;
     color: #fff;
+    display: flex;
+    flex-direction: column;
 }
 
-footer {
+.container {
+    flex: 1 1 auto; 
+}
+
+.footer {
     text-align: center;
-    position: fixed;
+    position: relative;
     width: 100%;
     margin: 20px 0 0 0;
     bottom: 0;
+}
+
+#footer_text {
+    text-align: center;
 }
 
 /* /play */
@@ -93,3 +103,44 @@ input[type=submit] {
     color: #8d8d8d
 }
   
+/* /index */
+
+a {
+    text-decoration: none;
+}
+
+.oauth_btn {
+    width: auto;
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    margin: auto;
+    margin-top: 2vw;
+    display: block;
+}
+
+.rules {
+    padding-left: 5vw;
+    padding-right: 5vw;
+}
+
+.start_text {
+    padding-left: 5vw;
+    padding-right: 5vw;
+}
+
+#start_btn {
+    width: auto;
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    margin: auto;
+    margin-top: 2vw;
+    display: block;
+}
