@@ -49,44 +49,48 @@ const setPoints = (winsw, answerTime, currentAns, callback) => {
 
 router.get('/', (req, res) => {
     const mainIndex = require('./index');
-    let userDetails = mainIndex.userDetails()
-    userEmail = userDetails.email;
-    console.log(userEmail)
-    winsw = false
-    getLevel(userEmail, (level, relChecker, startPrev) => { 
-        if (level>10){
-            res.send('yea fin')
-        }
-        else{
-            db.collection('questions').doc(`q${level}`).get()
-            .then((doc) => {
-                if (doc.exists) {
-                    docId = doc.id;
-                    relCheck = relChecker;
-                    pseudoStart = startPrev;
-                    res.render('play', {data: {data: doc.data(), name: userDetails.name}})
-                    if (!relCheck){
-                        startTime = new Date().getTime() / 1000;
+    try {
+        let userDetails = mainIndex.userDetails()
+        userEmail = userDetails.email;
+        winsw = false
+        getLevel(userEmail, (level, relChecker, startPrev) => { 
+            if (level>10){
+                res.send('yea fin')
+            }
+            else{
+                db.collection('questions').doc(`q${level}`).get()
+                .then((doc) => {
+                    if (doc.exists) {
+                        docId = doc.id;
+                        relCheck = relChecker;
+                        pseudoStart = startPrev;
+                        res.render('play', {data: {data: doc.data(), name: userDetails.name}})
+                        if (!relCheck){
+                            startTime = new Date().getTime() / 1000;
+                            db.collection('users').doc(userEmail).update({
+                                start_time: parseInt(startTime)
+                            });
+                        } else {
+                            startTime = pseudoStart;
+                            winsw = true;
+                        }
+                        ans = doc.data().answer
                         db.collection('users').doc(userEmail).update({
-                            start_time: parseInt(startTime)
+                            reload: true
                         });
-                    } else {
-                        startTime = pseudoStart;
-                        winsw = true;
                     }
-                    ans = doc.data().answer
-                    db.collection('users').doc(userEmail).update({
-                        reload: true
-                    });
-                }
-                else {
-                    res.send('No data gotten')
-                }
-            }).catch((err) => {
-                res.send(err.message);
-            });
-        };
-    });
+                    else {
+                        res.send('No data gotten')
+                    }
+                }).catch((err) => {
+                    res.send(err.message);
+                });
+            };
+        });
+    } catch {
+        console.log('No user found')
+        res.redirect('./')
+    }
 });
 
 router.post('/', (req, res) => {
