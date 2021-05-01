@@ -18,7 +18,7 @@ app.engine('hbs', expressHandlebars({
 app.set('view engine', 'hbs');
 app.use(express.static(__dirname + '/static'));
 
-app.use('/', index);
+app.use('/', index.router);
 app.use('/play', play);
 
 app.listen(PORT, console.log('Started'));

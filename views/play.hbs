@@ -2,17 +2,15 @@
 
 <div class="play">
     <h1 id="heading">Prelims - Quiz</h1>
-    <p id="user_welcome">Hello, Mihir Aggarwal!</p>
+    <p id="user_welcome">Hello, {{data.name}}!</p>
     
     <div class="box">
         <p id="timer">0</p>
-        {{#each data}}
-        <h1>Question {{this.number}}</h1>
-        <p>{{this.question}}</p>
+        <h1>Question {{data.data.number}}</h1>
+        <p>{{data.data.question}}</p>
         <form method="post" action="/play">
             <input type="text" name="answer" id="answer" placeholder="Answer">
             <input type="submit" value="SUBMIT">
         </form>
-        {{/each}}
     </div>
 </div>

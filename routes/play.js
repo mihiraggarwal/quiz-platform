@@ -11,15 +11,16 @@ router.use(bodyParser.urlencoded());
 db = fbApp.firestore();
 let docId = '';
 let ans = '';
+let userEmail = '';
 let startTime = 0;
 let ansPoints = 0;
 let pseudoStart = 0
 let winsw = false;
 let relCheck = false
 
-const getLevel = (callback) => {
+const getLevel = (email, callback) => {
     let level = 0
-    db.collection('users').doc('Mihir Aggarwal').get()
+    db.collection('users').doc(email).get()
     .then((doc) => {
         let data = doc.data()
         level = data.question
@@ -47,41 +48,50 @@ const setPoints = (winsw, answerTime, currentAns, callback) => {
 }
 
 router.get('/', (req, res) => {
+    const mainIndex = require('./index');
+    let userDetails = mainIndex.userDetails()
+    userEmail = userDetails.email;
+    console.log(userEmail)
     winsw = false
-    getLevel((level, relChecker, startPrev) => { 
-        db.collection('questions').doc(`q${level}`).get()
-        .then((doc) => {
-            if (doc.exists) {
-                docId = doc.id;
-                relCheck = relChecker;
-                pseudoStart = startPrev;
-                res.render('play', {data: {data: doc.data()}})
-                if (!relCheck){
-                    startTime = new Date().getTime() / 1000;
-                    db.collection('users').doc('Mihir Aggarwal').update({
-                        start_time: parseInt(startTime)
+    getLevel(userEmail, (level, relChecker, startPrev) => { 
+        if (level>10){
+            res.send('yea fin')
+        }
+        else{
+            db.collection('questions').doc(`q${level}`).get()
+            .then((doc) => {
+                if (doc.exists) {
+                    docId = doc.id;
+                    relCheck = relChecker;
+                    pseudoStart = startPrev;
+                    res.render('play', {data: {data: doc.data(), name: userDetails.name}})
+                    if (!relCheck){
+                        startTime = new Date().getTime() / 1000;
+                        db.collection('users').doc(userEmail).update({
+                            start_time: parseInt(startTime)
+                        });
+                    } else {
+                        startTime = pseudoStart;
+                        winsw = true;
+                    }
+                    ans = doc.data().answer
+                    db.collection('users').doc(userEmail).update({
+                        reload: true
                     });
-                } else {
-                    startTime = pseudoStart;
-                    winsw = true;
                 }
-                ans = doc.data().answer
-                db.collection('users').doc('Mihir Aggarwal').update({
-                    reload: true
-                });
-            }
-            else {
-                res.send('No data gotten')
-            }
-        }).catch((err) => {
-            res.send(err.message);
-        });
+                else {
+                    res.send('No data gotten')
+                }
+            }).catch((err) => {
+                res.send(err.message);
+            });
+        };
     });
 });
 
 router.post('/', (req, res) => {
     let answerTime = Math.floor((new Date().getTime() / 1000) - startTime);
-    db.collection('users').doc('Mihir Aggarwal').get()
+    db.collection('users').doc(userEmail).get()
     .then((doc) => {
         if (doc.exists) {
             data = doc.data()
@@ -100,7 +110,7 @@ router.post('/', (req, res) => {
             points[`${docId.slice(1,)}`] = ansPoints
             totalPoints = parseInt(totalPoints)
             totalPoints += ansPoints
-            db.collection('users').doc('Mihir Aggarwal').update({
+            db.collection('users').doc(userEmail).update({
                 question: parseInt(docId.slice(1,)) + 1,
                 answers: answersMap,
                 time: allTimes,
