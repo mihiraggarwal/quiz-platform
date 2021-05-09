@@ -29,6 +29,43 @@ body {
     text-align: center;
 }
 
+/* toasts */
+
+.toast {
+    position: fixed;
+    top: 0;
+    /* left: 0; */
+    right: 2vw;
+    margin: auto;
+    float: right;
+    width: 15vw;
+    padding-left: 2vw;
+    padding-right: 2vw;
+    padding-top: 1vw;
+    padding-bottom: 1vw;
+    background: #cccccc;
+    color: #000;
+    text-align: center;
+    border: 1px solid #aaaaaa;
+    border-radius: 3px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    visibility: hidden;
+    opacity: 0;
+}
+
+.toast--visible {
+    top: 5vh;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.2s, top 0.2s, visibility 0.2s;
+}
+
+.toast--success {
+    background: #16e;
+    border-color: rgb(0, 44, 116);
+    color: #fff;
+}
+
 /* /play */
 
 #heading {

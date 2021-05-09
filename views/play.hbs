@@ -1,5 +1,12 @@
 <script src="../js/timer.js"></script>
 
+{{#if data.toastCheck}}
+<script src="../js/toast.js"></script>
+<div class="toast">
+    Answer submitted
+</div>
+{{/if}}
+
 <div class="play">
     <h1 id="heading">Prelims - Quiz</h1>
     <p id="user_welcome">Hello, {{data.name}}!</p>
@@ -10,7 +17,7 @@
         <p>{{data.data.question}}</p>
         <form method="post" action="/play">
             <input type="text" name="answer" id="answer" placeholder="Answer">
-            <input type="submit" value="SUBMIT">
+            <input type="submit" value="SUBMIT" id="btn_submit">
         </form>
     </div>
 </div>

@@ -55,13 +55,22 @@ router.get('/', (req, res) => {
         userEmail = userDetails.email;
         winsw = false
         getLevel(userEmail, (level, relChecker, startPrev) => { 
+            let toast = true;
+            if (relChecker || level == 1){
+                toast = false;
+            };
             db.collection('questions').doc(`q${level}`).get()
             .then((doc) => {
                 if (doc.exists) {
                     docId = doc.id;
                     relCheck = relChecker;
                     pseudoStart = startPrev;
-                    res.render('play', {data: {data: doc.data(), name: userDetails.name, userStatus: userEnd}})
+                    res.render('play', {data: {
+                        data: doc.data(), 
+                        name: userDetails.name, 
+                        userStatus: userEnd,
+                        toastCheck: toast
+                    }});
                     if (!relCheck){
                         startTime = new Date().getTime() / 1000;
                         db.collection('users').doc(userEmail).update({
