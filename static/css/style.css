@@ -13,6 +13,12 @@ body {
     flex-direction: column;
 }
 
+#ts_logo {
+    width: 4.5vw;
+    height: auto;
+    float: left;
+}
+
 .container {
     flex: 1 1 auto; 
 }
@@ -34,7 +40,6 @@ body {
 .toast {
     position: fixed;
     top: 0;
-    /* left: 0; */
     right: 2vw;
     margin: auto;
     float: right;
@@ -76,7 +81,15 @@ body {
 }
 
 #user_welcome {
-    margin-left: 20vw;
+    margin-left: 15vw;
+    font-weight: normal;
+    margin-top: -1vh;
+}
+
+#play_hr {
+    margin-left: 15vw;
+    margin-right: 15vw;
+    margin-bottom: 1vh;
 }
 
 .box {
@@ -84,8 +97,10 @@ body {
     height: auto;
     border: 1px solid #fff;
     padding: 20px;
+    display: block;
+    margin: auto;
     position: absolute;
-    top: 50%;
+    margin-top: 35vh;
     left: 50%;
     transform: translate(-50%, -50%);
 }
@@ -110,12 +125,11 @@ body {
 }
 
 input[type=text], select {
-    width: 100%;
+    width: 88%;
     background-color: #5a5a5a;
     padding: 6px 12px;
     color: #fff;
     margin: 8px 0;
-    display: inline-block;
     border: 1px solid rgb(102, 133, 184);
     outline: none;
     border-radius: 4px;
@@ -127,12 +141,14 @@ input:focus {
 }
 
 input[type=submit] {
-    width: auto;
-    background-color: #4CAF50;
+    width: 11%;
+    background-color: #28a745;
     color: #fff;
     padding: 6px 12px;
-    border: none;
-    border-radius: 3px;
+    border: 1px solid rgb(102, 133, 184);
+    border-radius: 4px;
+    margin: 8px 0;
+    float: right;
     cursor: pointer;
 }
 
@@ -146,22 +162,46 @@ a {
     text-decoration: none;
 }
 
+span {
+    color: #16e16e
+}
+
+.top_bar {
+    padding-left: 5vw;
+    padding-right: 5vw;
+    overflow-x: auto;
+}
+
+#quiz_name {
+    font-size: 6.5vh;
+}
+
 .oauth_btn {
     width: auto;
-    background-color: #4CAF50;
+    background-color: rgb(41,59,143);
     color: #fff;
     padding: 6px 12px;
     border: none;
     border-radius: 3px;
     cursor: pointer;
-    margin: auto;
+    height: 6.5vh;
+    float: right;
     margin-top: 2vw;
-    display: block;
 }
 
 .rules {
     padding-left: 5vw;
     padding-right: 5vw;
+    line-height: 1.6;
+}
+
+#rules_h1 {
+    text-align: center;
+    font-weight: normal;
+}
+
+#rules {
+    font-size: 3vh;
 }
 
 .start_text {
@@ -171,13 +211,21 @@ a {
 
 #start_btn {
     width: auto;
-    background-color: #4CAF50;
+    background-color: #28a745;
     color: #fff;
+    float: right;
+    height: 6.5vh;
+    margin-right: 1vw;
     padding: 6px 12px;
     border: none;
     border-radius: 3px;
     cursor: pointer;
-    margin: auto;
     margin-top: 2vw;
-    display: block;
+}
+
+/* /fin */
+
+#fin {
+    margin-left: 15vw;
+    margin-right: 15vw;
 }
