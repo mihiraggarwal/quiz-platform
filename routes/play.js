@@ -35,9 +35,9 @@ const setPoints = (winsw, answerTime, currentAns, callback) => {
     if (winsw) {
         ansPoints = answerTime*(-1)
     } else {
-        if (answerTime <= 30){
+        if (answerTime <= 60){
             if (currentAns == ans) {
-                ansPoints = 100-(answerTime*2)
+                ansPoints = 120-(answerTime*2)
             } else {
                 ansPoints = answerTime*(-1)
             }
