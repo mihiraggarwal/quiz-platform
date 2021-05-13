@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const json = require('json');
 const urlencoded = require('url');
+const localStorage = require('localStorage');
 const router = express.Router();
 const fbApp = require('../models/firebase');
 
@@ -49,9 +50,8 @@ const setPoints = (winsw, answerTime, currentAns, callback) => {
 }
 
 router.get('/', (req, res) => {
-    const mainIndex = require('./index');
+    const userDetails = JSON.parse(localStorage.getItem('userDetails'));
     try {
-        let userDetails = mainIndex.userDetails()
         userEmail = userDetails.email;
         winsw = false
         getLevel(userEmail, (level, relChecker, startPrev) => { 

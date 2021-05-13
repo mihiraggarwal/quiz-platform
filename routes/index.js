@@ -1,6 +1,7 @@
 const express = require('express');
 const axios = require('axios');
 const bodyParser = require('body-parser');
+const localStorage = require('localStorage');
 const fbApp = require('../models/firebase');
 
 const router = express.Router();
@@ -45,12 +46,7 @@ router.get('/redirect', (req, res) => {
 		const accessToken = response.data.access_token;
 		const configr = {headers: {'Authorization': `Bearer ${accessToken}`}}
 		axios.post('https://graph.microsoft.com/oidc/userinfo', {}, configr).then((resp) => {
-
-			module.exports = {
-				userDetails: () => {
-					return resp.data
-				}
-			}
+			localStorage.setItem('userDetails', JSON.stringify(resp.data));
 			
 			db.collection('users').doc(resp.data.email).get()
 			.then((doc) => {
